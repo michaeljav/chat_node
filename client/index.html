@@ -4,11 +4,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MJM Chat</title>
+    <script type="module">
+      import { io } from 'https://cdn.socket.io/4.5.4/socket.io.esm.min.js';
+
+      const socket = io();
+      const form = document.getElementById('form');
+      const input = document.getElementById('input');
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (input.value) {
+          socket.emit('chat message', input.value);
+          input.value = '';
+        }
+      });
+    </script>
     <style>
       *,
       *::before,
       *::after {
         box-sizing: border-box;
+      }
+      :root {
+        color-scheme: light dark;
       }
       body {
         margin: 0;
@@ -18,7 +36,7 @@
         display: grid;
         place-content: center;
         height: 100vh;
-        padding: 36px;
+        padding: 36px 36px 100px 36px;
         grid-template-rows: 1fr;
       }
 
@@ -30,12 +48,52 @@
         height: 100%;
         position: relative;
       }
+
+      #form {
+        bottom: 0;
+        display: flex;
+        height: 48px;
+        left: 0;
+        padding: 4px;
+        position: relative;
+        right: 0;
+        background-color: aquamarine;
+      }
+
+      #input {
+        border-radius: 999px;
+        border: 1px solid #eee;
+        flex: 1;
+        margin: 4px;
+        padding: 0 8px;
+      }
+      #input:focus {
+        outline: 0;
+      }
+      #form > button {
+        background: #09f;
+        color: #fff;
+        border: 0;
+        margin: 4px;
+        border-radius: 4px;
+      }
+      #form > button:hover {
+        background: #08e;
+      }
     </style>
   </head>
   <body>
     <section id="chat">
-      <form></form>
-      >
+      <form id="form">
+        <input
+          type="text"
+          name="message"
+          id="input"
+          placeholder="Type your message..."
+          autocomplete="off"
+        />
+        <button type="submit">Send</button>
+      </form>
     </section>
   </body>
 </html>

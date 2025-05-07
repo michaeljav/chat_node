@@ -49,3 +49,7 @@ To connect your application with **Turso**, you need to install the official Lib
 ```bash
 npm install @libsql/client dotenv
 ```
+
+# ramdom users
+
+https://random-data-api.com/api/users/random_user
